@@ -1,0 +1,53 @@
+        INP //input som bestemmer hvor mange tall som man kan putte inn
+        STA TALL1
+START   LDA TALL1 //loop som går til FUNK hvis TALL1 er positiv og hopper til MOD når den er lik null
+        BRZ SKRIVUT
+        BRP FUNK
+        HLT
+FUNK    INP //FUNK tar input og legger den til SUMMER
+        ADD SUMMER
+        STA SUMMER
+        LDA TALL1 //loader TALL1 inn i accumulator
+        SUB v1 //minus en
+        STA TALL1 //legg accumulator i TALL1
+        BRP START //branch til START
+SKRIVUT	LDA SUMMER
+        OUT SUMMER
+        BRA MOD
+MOD     LDA SUMMER //MOD tar SUMMER minus 2 til den blir negativ
+        BRZ SJEKK //hvis negativ gå til SJEKK
+        SUB v2
+        STA SUMMER
+        BRP MOD //hvis positiv gå til MOD
+SJEKK   LDA SUMMER //SJEKK sjekker om SUMMER er et oddetall eller partall ved å legge til 2 så fjerne 1
+        ADD v2
+        SUB v1
+        BRZ ODD //hvis tallet er oddetall vil accumulator være negativ
+        STA SUMMER
+        BRA PAR //hvis positiv gå til PAR
+ODD     LDA O //ODD printer "ODDE"
+        OTC
+        LDA D
+        OTC
+        OTC
+        LDA E
+        OTC
+        BRA STOP
+PAR     LDA P //PAR printer "PAR"
+        OTC
+        LDA A
+        OTC
+        LDA R
+        OTC
+        BRA STOP
+STOP    HLT //STOP stopper programmet
+TALL1   DAT
+SUMMER  DAT 0
+v1      DAT 1
+v2      DAT 2
+A       DAT 65 //ASCII tabell verdier
+P       DAT 80
+R       DAT 82
+O	    DAT 79
+D	    DAT 68
+E       DAT 69
